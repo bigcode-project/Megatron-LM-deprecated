@@ -401,6 +401,10 @@ def _add_network_size_args(parser):
                        'attention. This is set to '
                        '   args.hidden_size // args.num_attention_heads '
                        'if not provided.')
+    group.add_argument('--attention-head-type', type=str, default='multihead',
+                       choices=['multihead', 'multiquery'],
+                       help='Type of attention heads. `multihead` is the standard multi-head attention.'
+                       '`multiquery` shares the values and keys across attention heads')
     group.add_argument('--max-position-embeddings', type=int, default=None,
                        help='Maximum number of position embeddings to use. '
                        'This is the size of position embedding.')
@@ -477,6 +481,9 @@ def _add_logging_args(parser):
                         help="Name of wandb entity for reporting")
     group.add_argument('--wandb-project-name', type=str, default=None,
                         help="Name of wandb project")
+    group.add_argument('--transformer-timers', action='store_true',
+                        help="If set, activate the timers within the transformer layers."
+                        "Only for debugging, as this slows down the model.")
 
     return parser
 
